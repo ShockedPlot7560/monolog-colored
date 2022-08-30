@@ -1,0 +1,20 @@
+{
+    "name": "shockedplot7560/monolog-colored",
+    "description": "Custom handler for monolog using to color the output and write in file",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "Shockedplot7560\\MonologColored\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ShockedPlot7560",
+            "email": "66992287+ShockedPlot7560@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.0"
+    }
+}
