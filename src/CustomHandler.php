@@ -18,21 +18,21 @@ class CustomHandler extends AbstractProcessingHandler {
         parent::__construct($level, $bubble);
     }
 
-    protected function write(LogRecord $record) : void {
+    protected function write(array $record) : void {
         fwrite($this->file, $this->formatString($record) . PHP_EOL);
         fwrite(STDOUT, $this->formatString($record, true) . PHP_EOL);
     }
 
-    private function formatString(LogRecord $record, bool $colored = false): string{
+    private function formatString(array $record, bool $colored = false): string{
         $notice = $colored ? ColoredLevel::getTerminalColor(LogLevel::NOTICE) : "";
-        $color = $colored ? ColoredLevel::getTerminalColor($record->level) : "";
+        $color = $colored ? ColoredLevel::getTerminalColor($record["level"]) : "";
         $reset = $colored ? ColoredLevel::getReset() : "";
         $pattern = "[".$notice."%s$reset] ".$color."[%s %s]: %s$reset";
         return sprintf($pattern,
-            $record->datetime->format('Y-m-d H:i:s.v'),
-            $record->channel,
-            $record->level->getName(),
-            $record->message
+            $record["datetime"]->format('Y-m-d H:i:s.v'),
+            $record["channel"],
+            $record["level"]->getName(),
+            $record["message"]
         );
     }
 
