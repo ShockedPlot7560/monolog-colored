@@ -25,18 +25,21 @@ class CustomHandler extends AbstractProcessingHandler {
 
     private function formatString(array $record, bool $colored = false): string{
         $notice = $colored ? ColoredLevel::getTerminalColor(LogLevel::NOTICE) : "";
-        $color = $colored ? ColoredLevel::getTerminalColor($record["level"]) : "";
+        $color = $colored ? ColoredLevel::getTerminalColor(Logger::getLevelName($record["level"])) : "";
         $reset = $colored ? ColoredLevel::getReset() : "";
         $pattern = "[".$notice."%s$reset] ".$color."[%s %s]: %s$reset";
         return sprintf($pattern,
             $record["datetime"]->format('Y-m-d H:i:s.v'),
             $record["channel"],
-            $record["level"]->getName(),
+            Logger::getLevelName($record["level"]),
             $record["message"]
         );
     }
 
     private function initialize(string $filePath): void {
+        if(!file_exists(dirname($filePath))){
+            mkdir(dirname($filePath), 0777, true);
+        }
         if(!file_exists($filePath)) {
             file_put_contents($filePath, '');
         }

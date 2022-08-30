@@ -34,7 +34,7 @@ class ColoredLevel {
             self::init();
         }
         $level = $level instanceof Level ? $level->toPsrLogLevel() : $level;
-        return self::$color[$level] ?? '';
+        return self::$color[strtolower($level)] ?? '';
     }
 
     public static function getReset(): string{
